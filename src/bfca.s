@@ -1,4 +1,4 @@
-// armbfc 0.1
+// bfca 0.1
 // Brainfuck compiler for ARM
 //
 // Copyright © David H. Christensen
@@ -8,9 +8,9 @@
 // DESCRIPTION:
 //   Gets input via stdin, outputs via stdout
 // USAGE:
-//   cat "programfile" | armbfc.codegen > outputfile.s; as outputfile.s -o outputfile.o; cc outputfile.o -o outputfile; ./outputfile
-//   The shellscript abfck handles this like:
-//     armbfc program.bf binary
+//   cat "programfile" | bfca.codegen > outputfile.s; as outputfile.s -o outputfile.o; cc outputfile.o -o outputfile; ./outputfile
+//   The shellscript bfca handles this like:
+//     bfca program.bf binary
 //     ./binary
 //
 //   Binaries require linking with a C library due to the usage of four library functions, namely
