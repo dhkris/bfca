@@ -26,11 +26,15 @@ Alternatively, you can use the `bfca.codegen` binary, which accepts input from `
 Using `bfca.codegen`, you are also able to inspect the assembler output.
 
 ### Optimization
-BFCA 0.1 is the first release version, and is not currently an optimizing compiler. However, BFCA 0.2 will coalesce adjacent identical operations into a single operation. For instance, `++++` should emit a single `ADD r2, #4` instruction instead of four `ADD r2, #1` instructions.
+BFCA is an optimizing compiler. The following optimizations are used:
 
-One optimization, however, is implemented. The operations `+`, `-` and `,` do not write directly to the memory cell. Only when the memory cell pointer is changed with `<` and `>` is the cell written out, before the pointer is altered. 
-
-Therefore, consecutive operations on the same cell do not cause any memory accesses; intermediate results are stored in the registers.
+* Multiple identical instructions are coalesced into a single machine instruction. For instance, the sequence `++++` emits a single `ADD r2, #4` instruction instead of four `ADD r2, #1` instructions. This applies to:
+   * +
+   * -
+   * >
+   * <
+* Cells are only read from and written back to memory when the cell pointer moves. Therefore, only > and < instructions actually cause a write to and read from memory. Inbetween these, the value is held in the r2 register.
+* Cells are actually 4 bytes wide, since these aligned reads are faster than unaligned reads.
 
 ### Register allocation in output code
 * **r0**: External function call parameter/return value; pointer to current cell memory address
