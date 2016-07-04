@@ -9,7 +9,7 @@
 //   Gets input via stdin, outputs via stdout
 // USAGE:
 //   cat "programfile" | bfca.codegen > outputfile.s; as outputfile.s -o outputfile.o; cc outputfile.o -o outputfile; ./outputfile
-//   The shellscript abfck handles this like:
+//   The shellscript bfca handles this like:
 //     bfca program.bf binary
 //     ./binary
 //
@@ -19,10 +19,10 @@
 // INFO:
 //   Written in ARM assembly (uses GNU assembler)
 //   Works with all ARMv6+ devices, including all Raspberry Pi models.
+//   Optimizing compiler
 //
 // PLAN:
-//   Not yet optimizing, but 0.2 will "unroll" subsequent identical instructions
-//   such that ++++ is coalesced to a single +4 addition instruction.
+//   BFCA 0.3 will likely simulate the program to guide optimization
 
 .arch armv6
 .data
@@ -161,6 +161,7 @@ main_loop:
     // and fallback
     B mlep
     
+// Main loop end part
 mlep:
     CMP r7, #-1         
     BEQ main_end 
